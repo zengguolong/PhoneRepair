@@ -17,6 +17,6 @@ public class KeyUtils {
     }
 
     public static void main(String[] args) {
-        
+
     }
 }
