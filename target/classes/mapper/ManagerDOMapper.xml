@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.dragon.dao.ManagerDOMapper">
+  <resultMap id="BaseResultMap" type="com.project.dragon.dataobject.ManagerDO">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="phone_type" jdbcType="VARCHAR" property="phoneType" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, phone_type, message, price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from manager
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPhoneType" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from manager
+    where phone_type = #{phone_type,jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryAll" parameterType="com.project.dragon.dataobject.ManagerDO" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from manager
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from manager
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.project.dragon.dataobject.ManagerDO">
+    insert into manager (id, phone_type, message, 
+      price)
+    values (#{id,jdbcType=VARCHAR}, #{phoneType,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR}, 
+      #{price,jdbcType=DOUBLE}
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.dragon.dataobject.ManagerDO">
+    insert into manager
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="phoneType != null">
+        phone_type,
+      </if>
+      <if test="message != null">
+        message,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneType != null">
+        #{phoneType,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.dragon.dataobject.ManagerDO">
+    update manager
+    <set>
+      <if test="phoneType != null">
+        phone_type = #{phoneType,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null">
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.dragon.dataobject.ManagerDO">
+    update manager
+    set phone_type = #{phoneType,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

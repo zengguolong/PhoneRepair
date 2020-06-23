@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.dragon.dao.LabelDOMapper">
+  <resultMap id="BaseResultMap" type="com.project.dragon.dataobject.LabelDO">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="phone_label" jdbcType="VARCHAR" property="phoneLabel" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, phone_label
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from labels
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="queryAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from labels
+  </select>
+
+  <select id="byLabelType" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from labels
+    where  phone_label = #{phone_label,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from labels
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.project.dragon.dataobject.LabelDO">
+    insert into labels (id, phone_label)
+    values (#{id,jdbcType=VARCHAR}, #{phoneLabel,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.project.dragon.dataobject.LabelDO">
+    insert into labels
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="phoneLabel != null">
+        phone_label,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneLabel != null">
+        #{phoneLabel,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.project.dragon.dataobject.LabelDO">
+    update labels
+    <set>
+      <if test="phoneLabel != null">
+        phone_label = #{phoneLabel,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.project.dragon.dataobject.LabelDO">
+    update labels
+    set phone_label = #{phoneLabel,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

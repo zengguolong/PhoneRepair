@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.dragon.dao.NoticeDOMapper">
+    <resultMap id="BaseResultMap" type="com.project.dragon.dataobject.NoticeDO">
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="notice" jdbcType="VARCHAR" property="notice"/>
+        <result column="notice_image" jdbcType="VARCHAR" property="noticeImage"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, notice, notice_image
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from notice
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from notice
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from notice
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+    <insert id="insert" parameterType="com.project.dragon.dataobject.NoticeDO">
+    insert into notice (id, notice, notice_image
+      )
+    values (#{id,jdbcType=VARCHAR}, #{notice,jdbcType=VARCHAR}, #{noticeImage,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.project.dragon.dataobject.NoticeDO">
+        insert into notice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="notice != null">
+                notice,
+            </if>
+            <if test="noticeImage != null">
+                notice_image,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="notice != null">
+                #{notice,jdbcType=VARCHAR},
+            </if>
+            <if test="noticeImage != null">
+                #{noticeImage,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.project.dragon.dataobject.NoticeDO">
+        update notice
+        <set>
+            <if test="notice != null">
+                notice = #{notice,jdbcType=VARCHAR},
+            </if>
+            <if test="noticeImage != null">
+                notice_image = #{noticeImage,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.project.dragon.dataobject.NoticeDO">
+    update notice
+    set notice = #{notice,jdbcType=VARCHAR},
+      notice_image = #{noticeImage,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>
