@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
@@ -30,7 +32,7 @@ public class AdminController {
 
     //管理员登录
     @PostMapping("/login")
-    public ResultVO login(@RequestParam("name") String name,
+    public ResultVO login(@RequestParam("username") String name,
                           @RequestParam("password") String password,
                           HttpServletRequest httpServletRequest) {
         ResultVO resultVO = new ResultVO();
@@ -44,8 +46,10 @@ public class AdminController {
         httpServletRequest.getSession().setMaxInactiveInterval(36000);//设置session存储时间，以秒为单位
         resultVO.setCode(20000);
         resultVO.setMessage("登录成功");
-        resultVO.setData(admin.getId());
-        return resultVO;
+        Map<String,String> map = new HashMap<>();
+        map.put("token","asd5ad4a54da5ds4d5sadsad");
+        resultVO.setData(map);
+        return resultVO; //返回信息暂时写死
     }
 
     //查询所有用户信息接口
@@ -106,6 +110,20 @@ public class AdminController {
         userDAO.setAddress(address);
         userDAOMapper.insertSelective(userDAO);
         return ResultVOUtils.success("添加成功");
+    }
+
+    //或取管理员登录信息接口 返回token
+    @GetMapping("/getInfo")
+    public ResultVO userInfo(){  //暂时写死
+        Map<String,String> map = new HashMap<>();
+        map.put("code","20000");
+        map.put("name","admin1");
+        map.put("avatar","avatar");
+        ResultVO resultVO = new ResultVO();
+        resultVO.setCode(20000);
+        resultVO.setMessage("获取信息成功");
+        resultVO.setData(map);
+        return resultVO;
     }
 
     //登出接口
